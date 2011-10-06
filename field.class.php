@@ -1,6 +1,6 @@
 <?php
 
-abstract class Field {
+abstract class Field implements DrupalCommunicable {
   //The name of the field, required
   public $name;
   
@@ -16,24 +16,4 @@ abstract class Field {
     $this->name = $name;
     $this->entity = $entity;
   }
-  
-  /**
-   *  This function should save the field instance attached to the entity to the database
-   */
-  abstract function saveToDatabase();
-
-  /**
-   *  Compare this definition to the one in the database - should first ensure existance
-   */
-  abstract function diffToDatabase();
-
-  /**
-   *  Checks whether this field instance exists already or not
-   */
-  abstract function exists();
-
-  /**
-   *  Remove this field instance from the database
-   */
-  abstract function deleteFromDatabase();
 }

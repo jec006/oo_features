@@ -1,6 +1,6 @@
 <?php
 
-abstract class Entity
+abstract class Entity implements DrupalCommunicable
 {
   // Represents fields attached to this entity - is an array of things that extend Field
   public $fields;
@@ -48,22 +48,18 @@ abstract class Entity
    *  This function should save the entity type to the database
    *  It should call Field->saveToDatabase() for each of its fields.
    */
-  abstract function saveToDatabase();
+  public function saveToDatabase() {
+    foreach($this->fields as $name => $field) {
+      $field->saveToDatabase();
+    }
+    // etc.
+  }
   
   /**
    *  Compare this definition to the one in the database - should first ensure existance
    *  It should also compare the fields - both those currently attached by calling Field->diffToDatabase() 
    *  and check that no additional fields have been added.
    */
-  abstract function diffToDatabase();
-  
-  /**
-   *  Checks whether this entity type/bundle exists already or not
-   */
-  abstract function exists();
-  
-  /**
-   *  Remove this entity from the database and delete all field instances attached to it
-   */
-  abstract function deleteFromDatabase();
+  public function diffToDatabase() {
+  }
 }
